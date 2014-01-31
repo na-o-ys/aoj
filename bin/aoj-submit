@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require "aoj"
+require "optparse"
+
+def result_print(result)
+  puts result[:status]
+end
+
+# params configuration 
+params = {}
+optparser = ARGV.options do |opt|
+  opt.on("-t", "Post to Twitter") { params[:twitter] = true }
+  opt.on("-g", "Submit to Gist")  { params[:gist] = true}
+  opt.on("-p PROBLEM_ID", 
+         "AOJ Problem ID. By default, detected by filename.") do |val|
+           params[:problem] = val
+         end
+  opt.on("-l LANGUAGE", 
+         "Language of your source. By default, detected by filename.") do |val|
+           params[:language] = val
+         end
+end
+
+# parse params
+begin
+  filename = optparser.permute![0]
+rescue
+  puts "Invalid argument: filename must be specified."
+  exit
+end
+problem  = params[:problem]
+language = params[:language]
+
+# AOJ
+problem = AOJ::Submit.submit(filename, problem, language)
+exit unless problem
+ 
+result = AOJ::Result.fetch(AOJ::Configuration::USER_SETTING[:username])
+result_print result
+
+# Gist
+gist_uri = nil
+if params[:gist]
+  gist_result = AOJ::Gist.post(filename, problem)
+  puts gist_uri = gist_result["html_url"]
+end
+
+# Twitter
+if params[:twitter]
+  AOJ::Tweet.post(result[:problem], result[:status], result[:language], gist_uri)
+end

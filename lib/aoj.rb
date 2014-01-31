@@ -1,0 +1,6 @@
+require "aoj/util"
+require "aoj/configuration"
+require "aoj/submit"
+require "aoj/result"
+require "aoj/tweet"
+require "aoj/gistpost"
