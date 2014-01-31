@@ -1,0 +1,8 @@
+{
+  "username": "AOJ username",
+  "password": "AOJ password",
+  "tw_consumer_key"        : "twitter consumer key", 
+  "tw_consumer_secret"     : "twitter consumer secret",
+  "tw_access_token"        : "twitter access token",
+  "tw_access_token_secret" : "twitter access token secret"
+}
