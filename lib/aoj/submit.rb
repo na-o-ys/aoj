@@ -59,13 +59,11 @@ module AOJ
 
         form_name = judge[:map_form_name]
 
-        params.map{ |key, value|
-          enc(form_name[key]) + '=' + enc(value)
-        }.join('&')
-      end
+        params_enum = params.map do |k, v|
+          [form_name[k], v]
+        end
 
-      def enc(str)
-        URI.encode(str, /./n)
+        URI.encode_www_form(params_enum)
       end
 
     end
