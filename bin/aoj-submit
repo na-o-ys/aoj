@@ -35,7 +35,11 @@ language = params[:language]
 problem = AOJ::Submit.submit(filename, problem, language)
 exit unless problem
  
-result = AOJ::Result.fetch(AOJ::Configuration::USER_SETTING[:username])
+result = AOJ::Result.fetch(AOJ::Configuration::USER_SETTING[:username], Time.now - 60)
+unless result
+  puts "Failed to fetch result."
+  exit
+end
 result_print result
 
 # Gist
