@@ -10,7 +10,7 @@ module AOJ
         AOJ::Configuration::AOJ_SETTING[:path_result]
     end
 
-    def self.fetch(username)
+    def self.fetch(username, time_begin)
       wait_time = 2
 
       result = nil
@@ -18,8 +18,9 @@ module AOJ
         sleep(wait_time)
         xml = open(uri).read
         begin
-          result = parse(xml, username) 
+          result = parse(xml, username, time_begin) 
         rescue 
+          puts $!.message
           wait_time += 1
         else
           break
@@ -29,7 +30,7 @@ module AOJ
       result
     end
 
-    def self.parse(text, username)
+    def self.parse(text, username, time_begin)
       str = text.gsub(/\s/, " ")
       submission_regexp = /<status>(.*?<status>.*?<\/status>.*?)<\/status>/
       str.scan(submission_regexp){ |matches|
@@ -45,7 +46,9 @@ module AOJ
           result[:cputime  ] = extract(match, "cputime").to_i
           result[:memory   ] = extract(match, "memory").to_i
           result[:code_size] = extract(match, "code_size").to_i
-          return result
+          if result[:time] > time_begin
+            return result
+          end
         end
       }
       raise "in judge queue..."
