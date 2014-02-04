@@ -3,7 +3,7 @@ require "aoj"
 require "optparse"
 
 def result_print(result)
-  puts result[:status]
+  puts "Status: " + result[:status]
 end
 
 # params configuration 
