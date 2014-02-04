@@ -3,7 +3,7 @@ require "open-uri"
 module AOJ
   module Result
 
-    RETRY_COUNT = 5
+    RETRY_COUNT = 9
 
     def self.uri
       @uri ||= "http://" + AOJ::Configuration::AOJ_SETTING[:uri] + 
