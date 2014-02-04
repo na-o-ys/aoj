@@ -10,6 +10,7 @@ We've not deployed to RubyGems.org yet because this is unstable version for now.
 You can install manually by following commands: 
 ```
 $ git clone git://github.com/na-o-sss/aoj.git
+$ bundle install
 $ rake build
 $ rake install
 ```
