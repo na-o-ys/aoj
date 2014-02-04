@@ -11,9 +11,8 @@ module AOJ
       title = Util.problem_title(problem)
 
       texts = []
-      texts << "Submitted to #AOJ"
+      texts << "%s #AOJ"
       texts << "[%s:%s] %s"
-      texts << "RESULT: %s"
       texts << "MY ANSWER: %s" if answer_uri
       texts << "LANG: %s"
       text = texts.join("\n")
@@ -27,9 +26,9 @@ module AOJ
       end
 
       text % if answer_uri
-        [problem, title, problem_uri, status, answer_uri, language]
+        [status, problem, title, problem_uri, answer_uri, language]
       else
-        [problem, title, problem_uri, status, language]
+        [status, problem, title, problem_uri, language]
       end
     end
 
