@@ -30,9 +30,10 @@ rescue
 end
 problem  = params[:problem]
 language = params[:language]
+language = language.to_sym if language
 
 # AOJ
-problem = AOJ::Submit.submit(filename, problem, language)
+problem = AOJ::Submit.submit(filename, language, problem)
 exit unless problem
  
 result = AOJ::Result.fetch(AOJ::Configuration::USER_SETTING[:username], Time.now - 60)
