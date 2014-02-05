@@ -20,6 +20,8 @@ or chose easier way with any tools like [specific\_install](https://github.com/r
 You have to specify your login information. Edit `.aoj` and then put it in your home directory `~/.aoj`.
 Configurations about twitter are not necessary as long as you don't use twitter funcionality.
 
+If you need to use an HTTP proxy to access the internet, export the HTTP_PROXY or http_proxy environment variable: `export $HTTP_PROXY="http://proxy:8080"`.
+
 ## Usage
 
 Submit simply:

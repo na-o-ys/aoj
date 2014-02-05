@@ -15,7 +15,7 @@ module AOJ
       result = nil
       RETRY_COUNT.times {
         sleep(wait_time)
-        xml = open(uri).read
+        xml = open(uri, { proxy: true }).read
         begin
           result = parse(xml, username, time_begin) 
         rescue 

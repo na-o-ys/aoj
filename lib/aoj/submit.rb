@@ -24,7 +24,8 @@ module AOJ
 
         print_log(filename, language, problem)
 
-        Net::HTTP.start(uri) { |http|
+        proxy_host, proxy_port = (ENV["HTTP_PROXY"] || '').sub(/http:\/\//, '').split(':')
+        Net::HTTP::Proxy(proxy_host, proxy_port).start(uri) { |http|
           response = http.post(path_submit, data)
           print response.code, ' ', response.message, "\n" 
           if response.code.to_i == 200
