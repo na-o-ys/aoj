@@ -6,8 +6,7 @@ module AOJ
     RETRY_COUNT = 9
 
     def self.uri
-      @uri ||= "http://" + AOJ::Configuration::AOJ_SETTING[:uri] + 
-        AOJ::Configuration::AOJ_SETTING[:path_result]
+      @uri ||= "http://" + Constant[:uri] + Constant[:result_path]
     end
 
     def self.fetch(username, time_begin)
