@@ -9,7 +9,8 @@ module AOJ
       '.cc'   => :cpp,
       '.C'    => :cpp,
       '.java' => :java,
-      '.rb'   => :ruby
+      '.rb'   => :ruby,
+      '.py'   => :python
     }
 
     AOJ_SETTING = {
@@ -32,7 +33,8 @@ module AOJ
         :cpp  => 'C++',
         :java => 'JAVA',
         :ruby => 'Ruby',
-        :cpp11  => 'C++11'
+        :cpp11  => 'C++11',
+        :python => "Python"
       }
     }
 
