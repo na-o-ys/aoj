@@ -1,5 +1,3 @@
-require "open-uri"
-
 module AOJ
   module Result
 
@@ -11,20 +9,12 @@ module AOJ
 
     def self.fetch(username, time_begin)
 
-      proxy_former, proxy_latter = (ENV["http_proxy"] || '').sub(/http:\/\//, '').split('@')
-        if proxy_latter == nil then
-          proxy_url = "http://" + proxy_former
-        else
-          proxy_user, proxy_pass = proxy_former.split(':')
-          proxy_url = "http://" + proxy_latter
-        end
-
       wait_time = 2
 
       result = nil
       RETRY_COUNT.times {
         sleep(wait_time)
-        xml = open(uri, { :proxy_http_basic_authentication => [proxy_url, proxy_user, proxy_pass] }).read
+        xml = HTTP.open(uri).read
         begin
           result = parse(xml, username, time_begin) 
         rescue 
