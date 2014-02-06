@@ -5,7 +5,8 @@ module AOJ
   module Util
     class << self
       def problem_uri(problem)
-        "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=" + problem
+        "http://" + Constant[:uri] + Constant[:problem_path] + 
+          "?id=" + problem
       end
 
       def problem_title(problem)

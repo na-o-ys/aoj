@@ -3,12 +3,11 @@ require "open-uri"
 
 module AOJ
   module Submit
-    extend Configuration
 
     class << self
 
       def get_language(filename)
-        MAP_EXTNAME_LANGUAGE[File.extname(filename)]
+        Language.map_extname_label[File.extname(filename)]
       end
 
       def get_problem(filename)
@@ -19,15 +18,13 @@ module AOJ
         language ||= get_language(filename)
         problem  ||= get_problem(filename) 
 
-        judge        = AOJ_SETTING
-        uri          = judge[:uri]
-        path_submit  = judge[:path_submit]
+        uri          = Constant[:uri]
+        path_submit  = Constant[:submit_path]
         data         = create_data(filename, language, problem)
 
         print_log(filename, language, problem)
 
-        proxy_host, proxy_port = (ENV["http_proxy"] || '').sub(/http:\/\//, '').split(':')
-        
+        proxy_host, proxy_port = (ENV["HTTP_PROXY"] || '').sub(/http:\/\//, '').split(':')
         Net::HTTP::Proxy(proxy_host, proxy_port).start(uri) { |http|
           response = http.post(path_submit, data)
           print response.code, ' ', response.message, "\n" 
@@ -35,6 +32,7 @@ module AOJ
             return problem
           end
         }
+
         nil
       end
 
@@ -47,22 +45,17 @@ module AOJ
       end
 
       def create_data(filename, language, problem)
-        judge = AOJ_SETTING
-        user  = USER_SETTING
-
         params = {
-          :username => user[:username],
-          :password => user[:password],
+          :username => Configuration.login_credentials[:username],
+          :password => Configuration.login_credentials[:password],
 
-          :problem => problem,
-          :program   => File.open(filename).read,
-          :language  => judge[:map_form_value_language][language],
+          :problem  => problem,
+          :program  => File.open(filename).read,
+          :language => Language.map_label_submit_name[language],
         }
 
-        form_name = judge[:map_form_name]
-
         params_enum = params.map do |k, v|
-          [form_name[k], v]
+          [Constant[:form_names][k], v]
         end
 
         URI.encode_www_form(params_enum)

@@ -36,7 +36,7 @@ language = language.to_sym if language
 problem = AOJ::Submit.submit(filename, language, problem)
 exit unless problem
  
-result = AOJ::Result.fetch(AOJ::Configuration::USER_SETTING[:username], Time.now - 60)
+result = AOJ::Result.fetch(AOJ::Configuration.login_credentials[:username], Time.now - 60)
 unless result
   puts "Failed to fetch result."
   exit

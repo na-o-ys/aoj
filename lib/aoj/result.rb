@@ -6,8 +6,7 @@ module AOJ
     RETRY_COUNT = 9
 
     def self.uri
-      @uri ||= "http://" + AOJ::Configuration::AOJ_SETTING[:uri] + 
-        AOJ::Configuration::AOJ_SETTING[:path_result]
+      @uri ||= "http://" + Constant[:uri] + Constant[:result_path]
     end
 
     def self.fetch(username, time_begin)
@@ -16,7 +15,7 @@ module AOJ
       result = nil
       RETRY_COUNT.times {
         sleep(wait_time)
-        xml = open(uri).read
+        xml = open(uri, { proxy: true }).read
         begin
           result = parse(xml, username, time_begin) 
         rescue 
