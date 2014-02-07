@@ -10,7 +10,7 @@ module AOJ
       env = env.sub(/http:\/\//, "")
       if env.include?("@")
         auth, env = env.split("@")
-        info[:user], info[:path] = auth.split(":")
+        info[:user], info[:pass] = auth.split(":")
       end
       info[:host], port_str = env.split(":")
       info[:port] = port_str.sub(/\//, "").to_i
