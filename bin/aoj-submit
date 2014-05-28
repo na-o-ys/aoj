@@ -70,11 +70,10 @@ if params[:gist]
 end
 
 # Twitter
-puts AOJ::Tweet.enable?
-if params[:twitter] && AOJ::Tweet.enable?
+if params[:twitter] && AOJ::Twitter.enable?
   if params[:gist]
-    AOJ::Tweet.post(result[:problem], result[:status], result[:language], gist_uri)
+    AOJ::Twitter.post(result[:problem], result[:status], result[:language], gist_uri)
   else
-    AOJ::Tweet.post(result[:problem], result[:status], result[:language])
+    AOJ::Twitter.post(result[:problem], result[:status], result[:language])
   end
 end

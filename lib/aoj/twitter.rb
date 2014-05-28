@@ -1,7 +1,7 @@
 require "twitter"
 
 module AOJ
-  module Tweet
+  module Twitter
     def self.enable?
       client.credentials?
     end
@@ -37,7 +37,7 @@ module AOJ
     end
 
     def self.client
-      @client ||= Twitter::REST::Client.new do |config|
+      @client ||= ::Twitter::REST::Client.new do |config|
         config.consumer_key        = Configuration.tw_consumer_key
         config.consumer_secret     = Configuration.tw_consumer_secret
         config.access_token        = Configuration.tw_access_token
