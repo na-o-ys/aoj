@@ -2,6 +2,10 @@ require "twitter"
 
 module AOJ
   module Tweet
+    def self.enable?
+      client.credentials?
+    end
+
     def self.post(problem, status, language, answer_uri = nil)
       client.update posttext(problem, status, language, answer_uri)
     end

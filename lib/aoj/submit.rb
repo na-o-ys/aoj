@@ -6,56 +6,39 @@ module AOJ
 
     class << self
 
-      def get_language(filename)
-        Language.map_extname_label[File.extname(filename)]
+      def check_language(language)
+        if language then
+          unless Language.languages.include?(language) then
+            raise StandardError.new("Language \"" + language.to_s + "\" is unsupported.")
+          end
+        end
       end
 
-      def get_problem(filename)
-        File.basename(filename).split(/[^A-Z0-9]/).first
-      end
+      def submit(solution, language, problem)
+        check_language(language) if language
 
-      def submit(filename, language = nil, problem = nil)
-        language ||= get_language(filename)
-        problem  ||= get_problem(filename) 
-
-        uri          = Constant[:uri]
-        path_submit  = Constant[:submit_path]
-        data         = create_data(filename, language, problem)
-
-        print_log(filename, language, problem)
+        uri         = Constant[:uri]
+        submit_path = Constant[:submit_path]
+        data        = create_data(solution, language, problem)
 
         HTTP.start(uri) { |http|
-          response = http.post(path_submit, data)
+          response = http.post(submit_path, data)
           print response.code, ' ', response.message, "\n" 
           if response.code.to_i == 200
-            return problem
+            return
           end
         }
 
-        response = HTTP.post(submit_uri, data)
-        print response.code, ' ', response.message, "\n" 
-        if response.code.to_i == 200
-          return problem
-        end
-
-        nil
+        raise StandardError.new("Error while submitting.")
       end
 
-      def print_log(filename, language, problem)
-        STDERR << "Submitting...\n"
-
-        STDERR << "Problem:  " << problem << "\n"
-        STDERR << "Language: " << language.to_s.capitalize << "\n"
-        STDERR << "Filename: " << filename << "\n"    
-      end
-
-      def create_data(filename, language, problem)
+      def create_data(solution, language, problem)
         params = {
           :username => Configuration.login_credentials[:username],
           :password => Configuration.login_credentials[:password],
 
           :problem  => problem,
-          :program  => File.open(filename).read,
+          :program  => solution,
           :language => Language.map_label_submit_name[language],
         }
 

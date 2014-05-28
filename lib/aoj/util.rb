@@ -15,6 +15,14 @@ module AOJ
       rescue
         nil
       end
+
+      def extract_language(filename)
+        Language.map_extname_label[File.extname(filename)]
+      end
+
+      def extract_problem(filename)
+        File.basename(filename, ".*")
+      end
     end
   end
 end

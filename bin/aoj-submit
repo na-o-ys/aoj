@@ -17,26 +17,45 @@ optparser = ARGV.options do |opt|
          end
   opt.on("-l LANGUAGE", 
          "Language of your source. By default, detected by filename.") do |val|
-           params[:language] = val
+           lang = val.to_sym
+           unless Language.languages.include?(lang)
+             raise StandardError.new("Language \"" + val + "\" is unsupported.")
+           end
+           params[:language] = lang
          end
 end
 
 # parse params
 begin
-  filename = optparser.permute![0]
-rescue
-  puts "Invalid argument: filename must be specified."
+  optparser.parse!
+rescue => e
+  puts "Invalid argument: " + e.message
   exit
 end
-problem  = params[:problem]
-language = params[:language]
-language = language.to_sym if language
+filename = ARGV[0]
+unless filename then
+  puts "Invalid argument: Specify the file to be submitted."
+  exit
+end
+problem  = params[:problem] || AOJ::Util.extract_problem(filename)
+language = params[:language] || AOJ::Util.extract_language(filename)
+solution = File.read(filename)
 
 # AOJ
-problem = AOJ::Submit.submit(filename, language, problem)
-exit unless problem
+# submit
+STDERR << "Submitting...\n"
+STDERR << "Problem:  " << problem << "\n"
+STDERR << "Language: " << language.to_s.capitalize << "\n"
+STDERR << "Filename: " << filename << "\n"
+begin
+  AOJ::Submit.submit(solution, language, problem)
+rescue => e
+  puts e.message
+  exit
+end
  
-result = AOJ::Result.fetch(AOJ::Configuration.login_credentials[:username], Time.now - 60)
+# get result
+result = AOJ::Result.fetch(problem)
 unless result
   puts "Failed to fetch result."
   exit
@@ -51,6 +70,11 @@ if params[:gist]
 end
 
 # Twitter
-if params[:twitter]
-  AOJ::Tweet.post(result[:problem], result[:status], result[:language], gist_uri)
+puts AOJ::Tweet.enable?
+if params[:twitter] && AOJ::Tweet.enable?
+  if params[:gist]
+    AOJ::Tweet.post(result[:problem], result[:status], result[:language], gist_uri)
+  else
+    AOJ::Tweet.post(result[:problem], result[:status], result[:language])
+  end
 end
