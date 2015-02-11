@@ -5,4 +5,3 @@ gemspec
 
 gem "twitter"
 gem "nokogiri"
-gem "gist"

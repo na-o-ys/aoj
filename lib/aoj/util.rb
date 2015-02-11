@@ -9,6 +9,7 @@ module AOJ
           "?id=" + problem
       end
 
+      # TODO: api利用
       def problem_title(problem)
         doc = Nokogiri::HTML(open(problem_uri(problem)))
         doc.css("#pageinfo h1.title")[0].text
@@ -17,7 +18,9 @@ module AOJ
       end
 
       def extract_language(filename)
-        Language.map_extname_label[File.extname(filename)]
+        AOJ::Language.map_extname_label[File.extname(filename)].tap do |label|
+          raise AOJ::Error::LanguageDetectionError, "Failed to detect language (#{filename})" unless label
+        end
       end
 
       def extract_problem(filename)

@@ -2,22 +2,23 @@ module AOJ
   module Language
     @languages = [
       :c, :cpp, :cpp11, :java, :ruby, :csharp, 
-      :d, :python, :php, :javascript
-    ].freeze
+      :d, :python, :python3, :php, :javascript
+    ]
 
+    # TODO: config overwrite
     @map_extname_label = {
       ".c"    => :c,
-      '.cpp'  => :cpp,
-      '.cc'   => :cpp,
-      '.C'    => :cpp,
-      '.java' => :java,
-      '.rb'   => :ruby,
+      ".cpp"  => :cpp,
+      ".cc"   => :cpp,
+      ".C"    => :cpp,
+      ".java" => :java,
+      ".rb"   => :ruby,
       ".cs"   => :csharp,
       ".d"    => :d,
       ".py"   => :python,
       ".php"  => :php,
       ".js"   => :javascript
-    }.freeze
+    }
 
     @map_label_submit_name = {
       :c          => "C",
@@ -30,7 +31,7 @@ module AOJ
       :python     => "Python",
       :php        => "PHP",
       :javascript => "JavaScript"
-    }.freeze
+    }
 
     class << self
       attr_reader :languages, :map_extname_label, :map_label_submit_name

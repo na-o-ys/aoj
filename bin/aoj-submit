@@ -2,27 +2,19 @@
 require "aoj"
 require "optparse"
 
-def result_print(result)
-  puts "Status: " + result[:status]
-end
-
 # params configuration 
 params = {}
 optparser = ARGV.options do |opt|
   opt.on("-t", "Post to Twitter") { params[:twitter] = true }
   opt.on("-g", "Submit to Gist")  { params[:gist] = true}
-  opt.on("-p PROBLEM_ID", 
-         "AOJ Problem ID. By default, detected by filename.") do |val|
-           params[:problem] = val
-         end
-  opt.on("-l LANGUAGE", 
-         "Language of your source. By default, detected by filename.") do |val|
-           lang = val.to_sym
-           unless Language.languages.include?(lang)
-             raise StandardError.new("Language \"" + val + "\" is unsupported.")
-           end
-           params[:language] = lang
-         end
+  opt.on("-p PROBLEM_ID", "AOJ Problem ID. By default, detected by filename.") do |val|
+    params[:problem] = val
+  end
+  opt.on("-l LANGUAGE", "Language of your source. By default, detected by filename.") do |val|
+    lang = val.to_sym
+    raise LanguageUnsupportedError.new unless Language.languages.include?(lang)
+    params[:language] = lang
+  end
 end
 
 # parse params

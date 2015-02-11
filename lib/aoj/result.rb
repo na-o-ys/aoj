@@ -7,6 +7,7 @@ module AOJ
       @uri ||= "http://" + Constant[:uri] + Constant[:result_path] + "?user_id=" + username
     end
 
+    # TODO: use API
     def self.fetch(problem)
       username = AOJ::Configuration.login_credentials[:username]
       time_begin = Time.now - 60
