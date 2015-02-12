@@ -11,7 +11,7 @@ module AOJ
     def submit(file)
       language = parse_language(file, options[:lang])
       problem_id = parse_problem_id(file, options[:problem])
-      validate_problem(problem_id)
+      validate_problem_id!(problem_id)
       solution = read_file(file)
 
       Submit.submit(solution, language, problem_id)
@@ -19,6 +19,10 @@ module AOJ
       print_result result
 
       Twitter.post(problem_id, result[:status], language) if options[:twitter] and Twitter.enable?
+    rescue AOJ::Error::LanguageUnsupportedError,
+           AOJ::Error::LanguageDetectionError,
+           AOJ::Error::InvalidProblemIdError => e
+      puts e.message
     end
 
     desc "omikuji", "今日の 1 問"

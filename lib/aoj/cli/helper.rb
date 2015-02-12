@@ -16,8 +16,10 @@ module AOJ
       opt || Util.extract_problem(file)
     end
 
-    def validate_problem(problem_id)
-      AOJ::API.problem_search(problem_id)
+    def validate_problem_id!(problem_id)
+      AOJ::API.problem_search(problem_id) == problem_id
+    rescue AOJ::Error::APIError
+      raise #TODO:
     end
 
     def read_file(file)
