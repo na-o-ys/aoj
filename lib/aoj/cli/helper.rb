@@ -17,9 +17,10 @@ module AOJ
     end
 
     def validate_problem_id!(problem_id)
-      AOJ::API.problem_search(problem_id) == problem_id
+      err = -> { raise AOJ::Error::InvalidProblemIdError, "Invalid problem id #{problem_id}" }
+      err.call if AOJ::API.problem_search(problem_id) != problem_id
     rescue AOJ::Error::APIError
-      raise #TODO:
+      err.call
     end
 
     def read_file(file)
