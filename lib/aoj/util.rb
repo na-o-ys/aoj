@@ -17,12 +17,6 @@ module AOJ
         nil
       end
 
-      def extract_language(filename)
-        AOJ::Language.map_extname_label[File.extname(filename)].tap do |label|
-          raise AOJ::Error::LanguageDetectionError, "Failed to detect language (#{filename})" unless label
-        end
-      end
-
       def extract_problem(filename)
         File.basename(filename, ".*")
       end

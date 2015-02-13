@@ -1,31 +1,25 @@
 module AOJ
   module CLI::Helper
-    def parse_language(file, opt)
+    def detect_language(file, opt)
       if opt
-        opt.to_sym.tap do |lang|
-          unless Language.languages.include?(lang)
-            raise Error::LanguageUnsupportedError, "Unsupported language (#{lang})"
-          end
-        end
+        AOJ::Language.find(opt.to_sym)
       else
-        Util.extract_language file
-      end
+        AOJ::Language.find_by_ext(File.extname(file))
+      end.tap { |l|
+        unless l
+          raise AOJ::Error::LanguageDetectionError, "Failed to detect language, check `aoj languages`"
+        end
+      }
     end
 
-    def parse_problem_id(file, opt)
-      opt || Util.extract_problem(file)
-    end
-
-    def validate_problem_id!(problem_id)
-      err = -> { raise AOJ::Error::InvalidProblemIdError, "Invalid problem id #{problem_id}" }
-      err.call if AOJ::API.problem_search(problem_id) != problem_id
-    rescue AOJ::Error::APIError
-      err.call
+    def detect_problem(file, opt)
+      API.problem_search(opt || File.basename(file, ".*"))
     end
 
     def read_file(file)
       File.read(file)
-      # TODO: errorshori
+    rescue
+      raise AOJ::Error::FileOpenError, "Failed to open source file (#{file})"
     end
   end
 end

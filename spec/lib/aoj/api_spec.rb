@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe AOJ::API do
   describe 'problem_search' do
-    it 'should return valid XML' do
-      expect(AOJ::API.problem_search('0000')).to eq({
+    it 'should return valid problem' do
+      v = AOJ::API.problem_search('0000').instance_values.symbolize_keys
+      expect(v).to eq({
         id: '0000',
         name: 'QQ',
         available: true,
