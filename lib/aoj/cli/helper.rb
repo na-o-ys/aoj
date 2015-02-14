@@ -64,7 +64,7 @@ module AOJ
 
     def twitter_auth
       request_token = Twitter.instance.request_token
-      puts "Access to url."
+      puts "Connect to twitter account. Please access to url."
       puts request_token.authorize_url
       puts "Input PIN:"
       pin = STDIN.gets.strip

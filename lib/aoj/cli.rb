@@ -34,6 +34,7 @@ module AOJ
 
       if options[:twitter]
         unless conf.has_twitter_credential?
+          puts
           twitter_auth
         end
         Twitter.instance.post(solution, result)
