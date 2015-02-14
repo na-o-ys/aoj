@@ -69,6 +69,37 @@ module AOJ
         end
       end
 
+      def user(user_id)
+        url = "http://judge.u-aizu.ac.jp/onlinejudge/webservice/user"
+        params = { "id" => user_id }
+        uri = URI.parse("#{url}?#{params.to_query}")
+        doc = REXML::Document.new(AOJ::HTTP.get(uri))
+        solved_problems = doc.get_elements('user/solved_list/problem')
+        {
+          id:   doc.get_text('user/id').value.strip,
+          name: doc.get_text('user/name').value.strip,
+          solved_list: solved_problems.map { |item|
+            {
+              id: item.get_text('id').value.strip
+            }
+          }
+        }
+      end
+
+      def problem_list(volume)
+        url = "http://judge.u-aizu.ac.jp/onlinejudge/webservice/problem_list"
+        params = { "volume" => volume }
+        uri = URI.parse("#{url}?#{params.to_query}")
+        doc = REXML::Document.new(AOJ::HTTP.get(uri))
+        problems = doc.get_elements('problem_list/problem')
+        problems.map do |problem|
+          {
+            id:   problem.get_text('id').value.strip,
+            name: problem.get_text('name').value.strip
+          }
+        end
+      end
+
       def submit(solution, credential)
         uri = URI.parse('http://judge.u-aizu.ac.jp/onlinejudge/servlet/Submit')
         params = {

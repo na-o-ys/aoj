@@ -27,6 +27,22 @@ describe AOJ::API do
     end
   end
 
+  describe 'user' do
+    it 'should return valid hash' do
+      h = AOJ::API.user('shioshiota')
+      expect(h[:solved_list].size).to be > 0
+      expect(h[:solved_list][0][:id]).to be_a String
+    end
+  end
+
+  describe 'problem_list' do
+    it 'should return valid array' do
+      a = AOJ::API.problem_list('10')
+      expect(a.size).to be > 0
+      expect(a[0][:id]).to be_a String
+    end
+  end
+
   describe 'submit'
 
   describe 'judge_result' do

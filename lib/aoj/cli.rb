@@ -47,6 +47,28 @@ module AOJ
 
     desc "omikuji", "今日の 1 問"
     def omikuji
+      problem = AOJ::Problem.random_icpc(conf['username'])
+      title = "ID #{problem.id}"
+      width = title.size
+      line = "-" * (width + 4)
+      title_line = "| #{title} |"
+      lspace = " " * ((width + 1)/2)
+      rspace = " " * (width + 1 - (width + 1)/2)
+      body = [problem.name.split("")]
+        .transpose
+        .map { |s| "|#{lspace}#{s[0]}#{rspace}|" }
+
+      outer_width = problem.url.size
+      outer_lspace = " " * (outer_width/2 - line.size/2 - 2)
+      puts [line, title_line, line, body, line]
+        .flatten
+        .map { |s| outer_lspace + s }
+        .join("\n")
+      puts
+      puts problem.url
+      puts
+    rescue AOJ::Error::NoProblemLeftError
+      puts "No problem left. You are crazy!"
     end
 
     desc "setting", "Setup login credentials"
