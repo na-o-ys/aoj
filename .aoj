@@ -1,8 +1,0 @@
-{
-  "username": "YOUR AOJ USERNAME",
-  "password": "YOUR AOJ PASSWORD",
-  "tw_consumer_key"        : "YOUR TWITTER CONSUMER KEY", 
-  "tw_consumer_secret"     : "YOUR TWITTER CONSUMER SECRET",
-  "tw_access_token"        : "YOUR TWITTER ACCESS TOKEN",
-  "tw_access_token_secret" : "YOUR TWITTER ACCESS TOKEN SECRET"
-}
