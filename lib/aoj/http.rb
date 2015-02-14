@@ -1,13 +1,15 @@
+require 'net/http'
+
 module AOJ
 
   HTTP = -> do
     # set proxy if specified
     # [http://][user:pass@]host:port
     env = ENV["HTTP_PROXY"] || ENV["http_proxy"]
-    break Net::HTTP unless env
+    break ::Net::HTTP unless env
 
     info = parse_proxy_info(env)
-    Net::HTTP::Proxy(
+    ::Net::HTTP::Proxy(
       info[:host],
       info[:port],
       info[:user],

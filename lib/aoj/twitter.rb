@@ -9,7 +9,6 @@ module AOJ
     CONSUMER_SECRET = "knA6biWCQ6oBpyVSEjHhFz3Mn8Z9UsJc7TD9h5DdZoRxBl0KBp"
 
     def post(solution, status)
-      puts create_text(solution, status)
       client.update create_text(solution, status)
     end
 
@@ -26,9 +25,9 @@ module AOJ
     def create_text(solution, status)
       text = <<-"EOS"
 #{status.status} #AOJ
-[%s] %s
+[#{solution.problem.id}:%s] %s
 SOURCE: %s
-LANG: #{solution.language.key}
+LANG: #{solution.language.submit_name}
       EOS
 
       # Shortening problem title
