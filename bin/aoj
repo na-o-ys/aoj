@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
 require "aoj"
-require "optparse"
 
 AOJ::CLI.start
