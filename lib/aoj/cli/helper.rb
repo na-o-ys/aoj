@@ -21,5 +21,21 @@ module AOJ
     rescue
       raise AOJ::Error::FileOpenError, "Failed to open source file (#{file})"
     end
+
+    def print_solution_info(solution)
+      puts "Language: #{solution.language.submit_name}"
+      puts "Problem:"
+      puts "  id:   #{solution.problem.id}"
+      puts "  name: #{solution.problem.name}"
+      print "\n"
+    end
+
+    def print_result(result)
+      puts "Judge result:"
+      puts "  Status:    #{result.status}"    if result.status
+      puts "  Code Size: #{result.code_size}" if result.code_size
+      puts "  CPU Time:  #{result.cputime}"   if result.cputime
+      puts "  Memory:    #{result.memory}"    if result.memory
+    end
   end
 end

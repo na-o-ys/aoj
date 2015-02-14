@@ -1,5 +1,6 @@
 module AOJ
-  module Result
+  class Result
+    attr_accessor :run_id, :user_id, :problem_id, :submission_date, :status, :language, :cputime, :memory, :code_size
 
     RETRY_COUNT = 9
 
