@@ -3,16 +3,17 @@ module AOJ
     attr_accessor :key, :submit_name
 
     langs = { # TODO: yml config
-      c:          "C",
-      cpp:        "C++",
-      java:       "JAVA",
-      ruby:       "Ruby",
-      cpp11:      "C++11",
-      csharp:     "C#",
-      d:          "D",
-      python:     "Python",
-      php:        "PHP",
-      javascript: "JavaScript"
+      c:       "C",
+      cpp:     "C++",
+      java:    "JAVA",
+      cpp11:   "C++11",
+      csharp:  "C#",
+      d:       "D",
+      ruby:    "Ruby",
+      python:  "Python",
+      python3: "Python3",
+      php:     "PHP",
+      js:      "JavaScript"
     } 
 
     @languages = langs.each.map { |key, submit_name|
@@ -34,7 +35,12 @@ module AOJ
       ".py"   => :python,
       ".php"  => :php,
       ".js"   => :javascript
-    }.freeze
+    }
+    if custom_ext = AOJ::Conf.instance['extname']
+      custom_ext.transform_values!(&:to_sym)
+      @extnames.merge! custom_ext
+    end
+    @extnames.freeze
 
     class << self
       attr_reader :languages, :extnames
@@ -46,7 +52,6 @@ module AOJ
       def find_by_ext(ext)
         languages.find { |l| l.key == extnames[ext] }
       end
-
     end
   end
 end

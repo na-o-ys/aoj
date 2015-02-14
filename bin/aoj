@@ -2,9 +2,4 @@
 require "aoj"
 require "optparse"
 
-begin
-  AOJ::CLI.start
-rescue AOJ::Error::LanguageUnsupportedError,
-       AOJ::Error::LanguageDetectionError => e
-  puts e.message
-end
+AOJ::CLI.start

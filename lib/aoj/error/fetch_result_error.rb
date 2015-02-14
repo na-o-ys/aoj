@@ -1,5 +1,5 @@
 module AOJ
   module Error
-    class FetchResultErrorError < StandardError; end
+    class FetchResultError < StandardError; end
   end
 end

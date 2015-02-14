@@ -1,48 +1,58 @@
 require "twitter"
+require "oauth"
 
 module AOJ
-  module Twitter
-    def self.enable?
-      client.credentials?
+  class Twitter
+    include Singleton
+
+    CONSUMER_KEY = "0T4d46LUm3jlf5xDPeRRQIUam"
+    CONSUMER_SECRET = "knA6biWCQ6oBpyVSEjHhFz3Mn8Z9UsJc7TD9h5DdZoRxBl0KBp"
+
+    def post(solution, status)
+      puts create_text(solution, status)
+      client.update create_text(solution, status)
     end
 
-    def self.post(problem, status, language, answer_uri = nil)
-      client.update posttext(problem, status, language, answer_uri)
+    def request_token
+      consumer = OAuth::Consumer.new(
+        CONSUMER_KEY,
+        CONSUMER_SECRET,
+        { site: "https://api.twitter.com" }
+      )
+      consumer.get_request_token
     end
 
-    def self.posttext(problem, status, language, answer_uri)
-      problem_uri = Util.problem_uri(problem)
-      title = Util.problem_title(problem)
+    private
+    def create_text(solution, status)
+      text = <<-"EOS"
+#{status.status} #AOJ
+[%s] %s
+SOURCE: %s
+LANG: #{solution.language.key}
+      EOS
 
-      texts = []
-      texts << "%s #AOJ"
-      texts << "[%s:%s] %s"
-      texts << "MY ANSWER: %s" if answer_uri
-      texts << "LANG: %s"
-      text = texts.join("\n")
-
-      wordcount = problem.length + text.length - 2*4 + 20 + 
-        status.length + language.length
-      wordcount += 20 if answer_uri
-
-      if wordcount + title.length > 140
-        title = title[0, 140 - wordcount - 1 - 2] + ".."
+      # Shortening problem title
+      url_len = 2 * client.configuration.short_url_length
+      title = solution.problem.name
+      wordcount = text.length - 2 * 3 + url_len
+      if wordcount > 140
+        title = title[0, 140 - wordcount - 2] + ".."
       end
 
-      text % if answer_uri
-        [status, problem, title, problem_uri, answer_uri, language]
-      else
-        [status, problem, title, problem_uri, language]
+      text % [title, solution.problem.url, status.review_url]
+    end
+
+    def client
+      @client ||= ::Twitter::REST::Client.new do |c|
+        c.consumer_key        = CONSUMER_KEY
+        c.consumer_secret     = CONSUMER_SECRET
+        c.access_token        = conf['twitter']['access_token']
+        c.access_token_secret = conf['twitter']['access_token_secret']
       end
     end
 
-    def self.client
-      @client ||= ::Twitter::REST::Client.new do |config|
-        config.consumer_key        = Configuration.tw_consumer_key
-        config.consumer_secret     = Configuration.tw_consumer_secret
-        config.access_token        = Configuration.tw_access_token
-        config.access_token_secret = Configuration.tw_access_token_secret
-      end
+    def conf
+      AOJ::Conf.instance
     end
   end
 end

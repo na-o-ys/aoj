@@ -9,28 +9,36 @@ module AOJ
     option :lang, aliases: :l
     desc "submit SOURCE_FILE", "Submit your source code"
     def submit(file)
-      solution = Solution.new.tap do |s|
-        s.problem  = detect_problem(file, options[:problem])
-        s.language = detect_language(file, options[:lang])
-        s.source   = read_file(file)
+      unless conf.has_credential?
+        input_credentials
+        puts
       end
 
+      solution = Solution.new.tap do |s|
+        s.source   = read_file(file)
+        s.problem  = detect_problem(file, options[:problem])
+        s.language = detect_language(file, options[:lang])
+      end
       print_solution_info solution
+      puts
 
       puts "Submitting..."
       API.submit(solution, Credential.get)
-      puts "Submission succeeded."
-      print "\n"
+      puts
 
       puts "Fetching judge result..."
       result = API.judge_result(solution, Time.now, Credential.get)
+      puts
 
-      print "\n"
       print_result result
 
-      Twitter.post(solution, result) if options[:twitter] and Twitter.enable?
-    rescue AOJ::Error::LanguageUnsupportedError,
-           AOJ::Error::LanguageDetectionError,
+      if options[:twitter]
+        unless conf.has_twitter_credential?
+          twitter_auth
+        end
+        Twitter.instance.post(solution, result)
+      end
+    rescue AOJ::Error::LanguageDetectionError,
            AOJ::Error::APIError,
            AOJ::Error::FetchResultError,
            AOJ::Error::FileOpenError => e
@@ -41,17 +49,28 @@ module AOJ
     def omikuji
     end
 
+    desc "setting", "Setup login credentials"
+    def setting
+      input_credentials
+    end
+
     desc "twitter", "Auth twitter account"
     def twitter
+      twitter_auth
     end
 
-    desc "languages", "List available languages"
-    def languages
-    end
+    desc "langs", "List available languages"
+    def langs
+      puts "List available languages:"
+      print "  "
+      puts Language.languages.map(&:key).join(", ")
 
-    desc "test SOURCE_FILE", "Local test"
-    def test
+      puts
+      puts "Auto-detect extensions:"
+      puts "  " + "[ext]".ljust(10) + "[lang]"
+      Language.extnames.each do |k, v|
+        puts "  " + k.ljust(10) + v.to_s
+      end
     end
-
   end
 end
