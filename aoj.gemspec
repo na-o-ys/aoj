@@ -6,10 +6,10 @@ require 'aoj/version'
 Gem::Specification.new do |spec|
   spec.name          = "aoj"
   spec.version       = AOJ::VERSION
-  spec.authors       = ["na-o-sss"]
+  spec.authors       = ["na-o-ys"]
   spec.email         = ["naoyoshi0511@gmail.com"]
   spec.summary       = %q{aoj submitter}
-  spec.description   = %q{Submitter program which submits your source to AOJ(Aizu Online Judge) and retrieves result of judgement.}
+  spec.description   = %q{This is a submitter program which submits your source to AOJ(Aizu Online Judge) and retrieves result of judgement.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -19,10 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "thor"
-  spec.add_development_dependency "activesupport"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "oauth"
-  spec.add_development_dependency "twitter"
+  spec.add_development_dependency "rake", "~> 10.4"
+  spec.add_development_dependency "thor", "~> 0.19"
+  spec.add_development_dependency "activesupport", "~> 4.2"
+  spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency "oauth", "~> 0.4"
+  spec.add_development_dependency "twitter", "~> 5.14"
 end
