@@ -83,7 +83,7 @@ which means, `hoge.py` file will be submitted as Python3 and `hoge.cpp` is C++11
 
 ## Contributing
 
-1. Fork it ( http://github.com/na-o-sss/aoj/fork )
+1. Fork it ( http://github.com/na-o-ys/aoj/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
