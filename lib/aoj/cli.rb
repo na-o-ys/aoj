@@ -48,6 +48,11 @@ module AOJ
 
     desc "omikuji", "今日の 1 問"
     def omikuji
+      unless conf.has_credential?
+        input_credentials
+        puts
+      end
+
       problem = AOJ::Problem.random_icpc(conf['username'])
       title = "ID #{problem.id}"
       width = title.size
