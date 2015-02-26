@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = AOJ::VERSION
   spec.authors       = ["na-o-ys"]
   spec.email         = ["naoyoshi0511@gmail.com"]
-  spec.summary       = %q{aoj submitter}
-  spec.description   = %q{This is a submitter program which submits your source to AOJ(Aizu Online Judge) and retrieves result of judgement.}
+  spec.summary       = %q{aoj command-line tool}
+  spec.description   = %q{AOJ is a command-line tool for AOJ(Aizu Online Judge). You can submit your source to AOJ and check the result of judgement without opening browser or copy & paste..}
   spec.homepage      = ""
   spec.license       = "MIT"
 
