@@ -24,12 +24,15 @@ module AOJ
     private
     def create_text(solution, status)
       text = <<-"EOS"
-#{status.status} #AOJ
-[#{solution.problem.id}:%s] %s
-SOURCE: %s
-LANG: #{solution.language.submit_name}
+Accepted [#{solution.problem.id}:%s] #AOJ
+%s
+
+Lang: #{solution.language.submit_name}
+Size: #{status.code_size} B
+Source: %s
       EOS
 
+      # TODO: refactor and create test
       # Shortening problem title
       url_len = 2 * client.configuration.short_url_length
       title = solution.problem.name

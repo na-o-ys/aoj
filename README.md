@@ -29,7 +29,7 @@ $ aoj submit 0001.cpp
 $ aoj submit mysource.cpp -p 0001 -l cpp11
 ```
 
-#### Submit and Tweet result
+#### Tweet result (only when accepted)
 
 ```
 $ aoj submit 0001.cpp -t
