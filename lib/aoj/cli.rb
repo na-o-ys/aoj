@@ -32,7 +32,7 @@ module AOJ
 
       print_result result
 
-      if options[:twitter]
+      if options[:twitter] and result.status == 'Accepted'
         unless conf.has_twitter_credential?
           puts
           twitter_auth

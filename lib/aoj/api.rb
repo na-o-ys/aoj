@@ -113,7 +113,6 @@ module AOJ
         if AOJ::HTTP.post_form(uri, params).code != '200'
           raise AOJ::Error::APIError, 'Failed to submit'
         end
-        # TODO: when userid or password is wrong
         solution
       end
 
