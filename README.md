@@ -1,6 +1,6 @@
 # AOJ
 
-AOJ is a command-line tool for [AOJ(Aizu Online Judge)](http://judge.u-aizu.ac.jp/onlinejudge/). You can submit your source to AOJ and check the result of judgement without opening browser or copy & paste.
+AOJ is a command-line tool for [AOJ(Aizu Online Judge)](http://judge.u-aizu.ac.jp/onlinejudge/). You can submit your source to AOJ and check the result of judgement without opening browser nor copy & paste.
 
 This program is forked from aizuzia's [AOJToolkit](http://d.hatena.ne.jp/Tayama/20101207/1291727425). 
 
