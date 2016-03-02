@@ -67,7 +67,7 @@ If you need to use an HTTP proxy to access the Internet, export the HTTP_PROXY o
 
 AOJ also support some extra configurations.
 
-#### Custom mapping from file extension to language
+#### Custom mapping between file extensions and languages
 
 To use custom mapping, please edit `~/.aojrc` directly.
 
@@ -79,7 +79,7 @@ extname:
   ".cpp": cpp11
 ```
 
-which means, `hoge.py` file will be submitted as Python3 and `hoge.cpp` is C++11.
+which means, `hoge.py` file will be submitted as Python3 and `hoge.cpp` be C++11.
 
 ## Contributing
 
