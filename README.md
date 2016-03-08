@@ -65,7 +65,7 @@ AOJ supports interactive configuration. Your account information once used will 
 
 If you need to use an HTTP proxy to access the Internet, export the HTTP_PROXY or http_proxy environment variable: `export $HTTP_PROXY="http://user:password@proxy:8080"`.
 
-AOJ also support some extra configurations.
+AOJ also supports some extra configurations.
 
 #### Custom mapping between file extensions and languages
 
