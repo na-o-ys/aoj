@@ -1,3 +1,3 @@
-module AOJ 
-  VERSION = "0.0.6"
+module AOJ
+  VERSION = "0.0.7"
 end

@@ -106,7 +106,7 @@ module AOJ
           'userID'     => credential.username,
           'password'   => credential.password,
           'problemNO'  => solution.problem.id,
-          'sourceCode' => solution.source,
+          'sourceCode' => solution.source.encode("Shift_JIS"),
           'language'   => solution.language.submit_name
         }
 

@@ -100,5 +100,10 @@ module AOJ
         puts "  " + k.ljust(10) + v.to_s
       end
     end
+
+    desc "version", "Show aoj gem version"
+    def version
+      puts AOJ::VERSION
+    end
   end
 end
